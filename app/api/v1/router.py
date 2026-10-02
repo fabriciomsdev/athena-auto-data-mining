@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import data_sources, health, pipelines
+from app.api.v1.endpoints import data_sources, health, pipelines, predict
 
 api_router = APIRouter()
 
@@ -11,3 +11,4 @@ api_router.include_router(
     data_sources.router, prefix="/data-sources", tags=["data-sources"]
 )
 api_router.include_router(pipelines.router, prefix="/pipelines", tags=["pipelines"])
+api_router.include_router(predict.router, prefix="/predict", tags=["predict"])
