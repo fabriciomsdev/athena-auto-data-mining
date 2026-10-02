@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv for fast dependency resolution
+RUN pip install --no-cache-dir uv
+
+# Copy dependency spec
+COPY pyproject.toml .
+
+# Install project dependencies
+RUN uv pip install --system -e ".[dev]"
+
+# Copy source
+COPY . .
+
+EXPOSE 8000
